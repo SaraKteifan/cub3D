@@ -93,5 +93,8 @@ void	init_config(t_config *cfg);
 int 	parse_file(char *filename, t_config *cfg);
 int		parse_headers(int fd, t_config *cfg, char **line);
 int		is_line_empty(const char *line);
+int		is_map_line(char *line);
+int		parse_map(int fd, t_config *cfg, char *line);
+int		validate_map(t_config *cfg);
 
 #endif

@@ -16,6 +16,7 @@ SRC_FILES   = main\
 			parsing/parse_headers\
 			parsing/parse_map\
 			parsing/parse_utils\
+			parsing/validate_map\
 			free\
 			init\
 			utils\

@@ -11,3 +11,41 @@
 /* ************************************************************************** */
 
 # include "cub3d.h"
+
+static char **append_line(char **map, char *line)
+{
+    char    **new_map;
+    int     len;
+    int     i;
+
+    len = 0;
+    if (map)
+        while (map[len])
+            len++;
+    new_map = malloc(sizeof(char *) * (len + 2));
+    if (!new_map)
+        return (NULL);
+    i = 0;
+    while (i < len)
+    {
+        new_map[i] = map[i];
+        i++;
+    }
+    new_map[i++] = ft_strdup(line);
+    new_map[i] = NULL;
+    free(map);
+    return (new_map);
+}
+int	parse_map(int fd, t_config *cfg, char *line)
+{
+	while (line && !is_line_empty(line))
+	{
+		cfg->map = append_line(cfg->map, line);
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
+    if (validate_map(cfg))
+	    exit_str("Error\nInvalid map\n");
+	return (0);
+}

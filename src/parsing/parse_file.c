@@ -40,10 +40,11 @@ int parse_file(char *filename, t_config *cfg)
     init_config(cfg);
     line = get_next_line(fd);
     status = parse_headers(fd, cfg, &line);
-/*     if(status == 0)
+    status = parse_headers(fd, cfg, &line);
+    if (status == 0)
         status = parse_map(fd, cfg, line);
     else if (line)
-        free(line); */
+        free(line);
     close(fd);
     return (status);
 }

@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 		exit_str("Error\nYou have assign two argument\n");
 	status = parse_file(av[1], &config);
 	if (status != 0)
-		exit_str("Error\n error while parsing headers\n");
+		exit_str("Error\nError while parsing the file\n");
 
 
 	printf("North: %s\n", config.north);
@@ -30,6 +30,9 @@ int	main(int ac, char **av)
 	printf("East: %s\n", config.east);
 	printf("Floor: %d,%d,%d\n", config.floor[0], config.floor[1], config.floor[2]);
 	printf("Ceiling: %d,%d,%d\n", config.ceiling[0], config.ceiling[1], config.ceiling[2]);
+
+	for (int i = 0; config.map && config.map[i]; i++)
+    printf("%s", config.map[i]);
 
 	return (0);
 }
