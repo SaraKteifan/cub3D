@@ -6,7 +6,7 @@
 /*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:12:50 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/10/07 13:16:24 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/10/29 13:19:16 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,43 +35,46 @@ int	parse_headers(int fd, t_config *cfg, char **line)
 }
 static int	parse_header_line(char *line, t_config *cfg)
 {
-	if (ft_strncmp(line, "NO ", 3) == 0)
-		cfg->north = parse_texture(line);
-	else if (ft_strncmp(line, "SO ", 3) == 0)
-		cfg->south = parse_texture(line);
-	else if (ft_strncmp(line, "WE ", 3) == 0)
-		cfg->west = parse_texture(line);
-	else if (ft_strncmp(line, "EA ", 3) == 0)
-		cfg->east = parse_texture(line);
-	else if (line[0] == 'F' && line[1] == ' ')
-	{
-		if (parse_color(line, cfg->floor))
-			return (1);
-	}
-	else if (line[0] == 'C' && line[1] == ' ')
-	{
-		if (parse_color(line, cfg->ceiling))
-			return (1);
-	}
-	else
+	char	*trimmed;
+
+	if (!line)
 		return (1);
+	replace_tabs_with_spaces(line);
+	trimmed = trim_spaces(line);
+	if (!trimmed)
+		return (1);
+	if (ft_strncmp(trimmed, "NO ", 3) == 0)
+		cfg->north = parse_texture(trimmed);
+	else if (ft_strncmp(trimmed, "SO ", 3) == 0)
+		cfg->south = parse_texture(trimmed);
+	else if (ft_strncmp(trimmed, "WE ", 3) == 0)
+		cfg->west = parse_texture(trimmed);
+	else if (ft_strncmp(trimmed, "EA ", 3) == 0)
+		cfg->east = parse_texture(trimmed);
+	else if (trimmed[0] == 'F' && trimmed[1] == ' ')
+		parse_color(trimmed, cfg->floor);
+	else if (trimmed[0] == 'C' && trimmed[1] == ' ')
+		parse_color(trimmed, cfg->ceiling);
+	else
+	{
+		free(trimmed);
+		return (1);
+	}
+	free(trimmed);
 	return (0);
 }
 
 static char	*parse_texture(char *line)
 {
-	int		fd;
-	int		len;
 	char	*path;
+	int		fd;
 
-	if (!line)
-		return (NULL);
-	path = ft_strdup(line + 3);
+	path = ft_strdup(line + 2);
 	if (!path)
 		return (NULL);
-	len = ft_strlen(path);
-	while (len > 0 && (path[len - 1] == '\n' || path[len - 1] == ' '))
-		path[--len] = '\0';
+	path = trim_spaces(path);
+	if (!path)
+		return (NULL);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
@@ -84,6 +87,7 @@ static char	*parse_texture(char *line)
 	close(fd);
 	return (path);
 }
+
 
 
 static int parse_color(char *line, int color[3])
