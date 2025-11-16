@@ -3,7 +3,6 @@ SO textures/test/south.png
 WE textures/test/west.png
 EA textures/test/east.png
 F 200,200,200
-C 200,200,200
 
 11111
 10001
@@ -18,5 +17,3 @@ C 200,200,200
 10001
 10001
 11111
-
-g

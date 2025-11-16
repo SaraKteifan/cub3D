@@ -20,9 +20,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-/******************************************************************************
-*                                   Structs                                   *
-******************************************************************************/
 typedef struct s_config
 {
 	char	*north;
@@ -81,12 +78,6 @@ typedef struct s_ray
 }	t_ray;
 
 
-
-
-/******************************************************************************
-*                             Function Prototypes                             *
-******************************************************************************/
-
 void	free_split(char **arr);
 void    exit_str(char *msg);
 void	init_config(t_config *cfg);
@@ -98,5 +89,13 @@ int		parse_map(int fd, t_config *cfg, char *line);
 int		validate_map(t_config *cfg);
 char	*trim_spaces(char *str);
 void	replace_tabs_with_spaces(char *line);
-
+int		ft_is_number(char *str);
+int		is_valid_rgb_value(char *part);
+int		validate_color_parts(char **parts, int color[3]);
+int		is_duplicate_texture(char *id, t_config *cfg);
+int		is_duplicate_color(char id, t_config *cfg);
+void	validate_and_assign_texture(char **dst, char *line, char *id);
+int		handle_header_value(char *trimmed, t_config *cfg);
+int		parse_color(char *line, int color[3]);
+char	*parse_texture(char *line);
 #endif

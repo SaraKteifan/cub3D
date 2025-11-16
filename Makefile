@@ -12,8 +12,10 @@ LIBFT       = $(LIBFT_PATH)libft.a
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
 
 SRC_FILES   = main\
+			parsing/handle_headers_config\
 			parsing/parse_file\
 			parsing/parse_headers\
+			parsing/parse_headers_2\
 			parsing/parse_map\
 			parsing/parse_utils\
 			parsing/validate_map\
