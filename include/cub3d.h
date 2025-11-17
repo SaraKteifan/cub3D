@@ -98,4 +98,5 @@ void	validate_and_assign_texture(char **dst, char *line, char *id);
 int		handle_header_value(char *trimmed, t_config *cfg);
 int		parse_color(char *line, int color[3]);
 char	*parse_texture(char *line);
+int		is_xpm_file(char *path);
 #endif
