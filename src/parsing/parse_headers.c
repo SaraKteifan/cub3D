@@ -6,7 +6,7 @@
 /*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:12:50 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/17 14:08:28 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:20:17 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ char	*parse_texture(char *line)
 	if (!path)
 		return (NULL);
 	fd = open(path, O_RDONLY);
-	if (fd < 0 || !is_xpm_file(path))
+	if (fd < 0)
 	{
-		ft_putstr_fd("Error\nInvalid texture path or extention: ", 2);
+		ft_putstr_fd("Error\nInvalid texture path: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putstr_fd("\n", 2);
 		free(path);
@@ -97,16 +97,5 @@ int	parse_color(char *line, int color[3])
 	free_split(parts);
 	if (result)
 		exit(1);
-	return (0);
-}
-int	is_xpm_file(char *path)
-{
-	int	len;
-
-	len = ft_strlen(path);
-	if (len < 4)
-		return (0);
-	if (!ft_strncmp(path + len - 4, ".xpm", 4))
-		return (1);
 	return (0);
 }
