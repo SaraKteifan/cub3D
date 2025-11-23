@@ -6,7 +6,7 @@
 /*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:12:50 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/03 13:20:17 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/11/23 15:08:35 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,15 @@ static int	parse_header_line(char *line, t_config *cfg)
 char	*parse_texture(char *line)
 {
 	char	*path;
+	char	*trimmed;
 	int		fd;
 
 	path = ft_strdup(line + 2);
 	if (!path)
 		return (NULL);
-	path = trim_spaces(path);
+	trimmed = trim_spaces(path);
+	free(path);
+	path = trimmed;
 	if (!path)
 		return (NULL);
 	fd = open(path, O_RDONLY);

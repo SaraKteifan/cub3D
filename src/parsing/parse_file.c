@@ -6,7 +6,7 @@
 /*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 10:33:15 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/10/07 12:19:45 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/11/23 13:42:20 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int parse_file(char *filename, t_config *cfg)
         return(-1);
     init_config(cfg);
     line = get_next_line(fd);
-    status = parse_headers(fd, cfg, &line);
     status = parse_headers(fd, cfg, &line);
     if (status == 0)
         status = parse_map(fd, cfg, line);
