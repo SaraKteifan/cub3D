@@ -6,7 +6,7 @@
 /*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:12:54 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/03 12:07:16 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:09:34 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,13 @@ int	parse_map(int fd, t_config *cfg, char *line)
 	{
 		replace_tabs_with_spaces(line);
 		cfg->map = append_line(cfg->map, line);
-		free(line);
+        // if (line)
+		    free(line);
 		line = get_next_line(fd);
 	}
+    // if(line)
 	free(line);
+    line = NULL;
 	if (validate_map(cfg))
 		exit_str("Error\nInvalid map\n");
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 13:12:55 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/03 13:14:39 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/11/24 13:30:29 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,21 @@
 
 void	validate_and_assign_texture(char **dst, char *line, char *id)
 {
-	*dst = parse_texture(line);
-	if (!*dst)
+	char *new_path;
+
+	new_path = parse_texture(line);
+	if (!new_path)
 	{
 		ft_putstr_fd("Error\nInvalid texture path: ", 2);
 		ft_putstr_fd(id, 2);
 		ft_putstr_fd("\n", 2);
 		exit(1);
 	}
+
+	if (*dst)
+		free(*dst);
+
+	*dst = new_path;
 }
 
 int	handle_header_value(char *trimmed, t_config *cfg)

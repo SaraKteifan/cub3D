@@ -1,6 +1,6 @@
 NAME    = cub3D
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror
+CFLAGS  = -Wall -Wextra -Werror -g
 
 SRC_PATH    = src/
 OBJ_PATH    = build/

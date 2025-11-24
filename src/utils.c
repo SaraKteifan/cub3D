@@ -6,7 +6,7 @@
 /*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 13:40:16 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/23 15:24:13 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/11/24 15:06:14 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	*trim_spaces(char *str)
 	while (end >= start && (str[end] == ' ' || str[end] == '\t' || str[end] == '\n'))
 		end--;
 	res = ft_substr(str, start, end - start + 1);
-	free(str);
 	return (res);
 }
 

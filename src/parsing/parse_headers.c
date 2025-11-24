@@ -6,7 +6,7 @@
 /*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:12:50 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/23 15:08:35 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/11/24 15:41:42 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ int	parse_headers(int fd, t_config *cfg, char **line)
 			*line = get_next_line(fd);
 			continue;
 		}
-		if (parse_header_line(*line, cfg))
+		if (parse_header_line(*line, cfg)) 
 			break;
-		free(*line);
 		*line = get_next_line(fd);
 	}
 	if (!cfg->north || !cfg->south || !cfg->west || !cfg->east
@@ -38,25 +37,23 @@ int	parse_headers(int fd, t_config *cfg, char **line)
 	return (0);
 }
 
-static int	parse_header_line(char *line, t_config *cfg)
+int parse_header_line(char *line, t_config *cfg)
 {
-	char	*trimmed;
-	int		result;
+    char *trimmed;
+    int res;
 
-	if (!line)
-		return (1);
-	replace_tabs_with_spaces(line);
-	trimmed = trim_spaces(line);
-	if (!trimmed)
-		return (1);
-	if (is_duplicate_texture(trimmed, cfg) || is_duplicate_color(trimmed[0], cfg))
-	{
-		free(trimmed);
-		exit(1);
-	}
-	result = handle_header_value(trimmed, cfg);
-	free(trimmed);
-	return (result);
+    if (!line)
+        return (-1);
+    trimmed = trim_spaces(line);
+    if (!trimmed) {
+        free(line);
+        return (-1);
+    }
+    res = handle_header_value(trimmed, cfg);
+    free(trimmed);
+	if (res == 0)
+    	free(line);
+    return res;
 }
 
 char	*parse_texture(char *line)

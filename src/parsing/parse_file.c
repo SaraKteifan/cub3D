@@ -6,7 +6,7 @@
 /*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 10:33:15 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/23 13:42:20 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:11:53 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,18 @@ int parse_file(char *filename, t_config *cfg)
     int     status;
 
     if(!filename || !cfg)
-        return (-1);
-        
+        return (-1);    
     check_extension(filename);
     fd = open(filename, O_RDONLY);
     if(fd < 0)
         return(-1);
     init_config(cfg);
     line = get_next_line(fd);
+    if(!line)
+    {
+        printf("line is null\n");
+        return(-1);
+    }
     status = parse_headers(fd, cfg, &line);
     if (status == 0)
         status = parse_map(fd, cfg, line);
