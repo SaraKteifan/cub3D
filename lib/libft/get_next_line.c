@@ -6,7 +6,7 @@
 /*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 11:54:41 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/24 15:59:34 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/11/26 12:24:56 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*save_remain(char *line)
 	j = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
-	if (line[i] == '\0')
+	if (line[i] == '\0' || line[i + 1] == '\0')
 	{
 		free(line);
 		return (NULL);
