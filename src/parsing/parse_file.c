@@ -26,28 +26,18 @@ static  void check_extension(char *path)
 
 int parse_file(char *filename, t_config *cfg)
 {
-    int fd;
-    char    *line;
-    int     status;
+	int		fd;
+	char	*line;
 
-    if(!filename || !cfg)
-        return (-1);    
-    check_extension(filename);
-    fd = open(filename, O_RDONLY);
-    if(fd < 0)
-        return(-1);
-    init_config(cfg);
-    line = get_next_line(fd);
-    if(!line)
-    {
-        printf("line is null\n");
-        return(-1);
-    }
-    status = parse_headers(fd, cfg, &line);
-    if (status == 0)
-        status = parse_map(fd, cfg, line);
-    else if (line)
-        free(line);
-    close(fd);
-    return (status);
+	check_extension(filename);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (1);
+	line = get_next_line(fd);
+	if (parse_headers(fd, cfg, &line))
+		return (free(line), close(fd), 1);
+	if (parse_map(fd, cfg, line))
+		return (close(fd), 1);
+	close(fd);
+	return (0);
 }

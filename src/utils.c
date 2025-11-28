@@ -15,6 +15,8 @@
 void    exit_str(char *msg)
 {
     ft_putstr_fd(msg, 2);
+	free_gnl_static();
+	
     exit(1);
 }
 

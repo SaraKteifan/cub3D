@@ -1,6 +1,4 @@
----
-mode: ask
----
+
 cub3D
 My first RayCaster with miniLibX
 Summary: This project is inspired by the world-famous Wolfenstein 3D game, which is

@@ -68,3 +68,30 @@ int	is_duplicate_color(char id, t_config *cfg)
 	}
 	return (0);
 }
+int valid_color_commas(char *s)
+{
+    int i = 0;
+    int commas = 0;
+    int last_was_comma = 0;
+
+    while (s[i])
+    {
+        if (s[i] == ',')
+        {
+            if (last_was_comma)  // consecutive commas → error
+                return (0);
+            commas++;
+            last_was_comma = 1;
+        }
+        else if (s[i] >= '0' && s[i] <= '9')
+            last_was_comma = 0;
+        else if (s[i] != ' ' && s[i] != '\t')
+            return (0);
+        i++;
+    }
+    if (last_was_comma)   // ends with comma → error
+        return (0);
+    if (commas != 2)
+        return (0);
+    return (1);
+}

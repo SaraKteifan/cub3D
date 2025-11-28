@@ -14,8 +14,10 @@
 
 static int	parse_header_line(char *line, t_config *cfg);
 
-int	parse_headers(int fd, t_config *cfg, char **line)
+int parse_headers(int fd, t_config *cfg, char **line)
 {
+	char	*tmp;
+
 	while (*line)
 	{
 		if (is_line_empty(*line))
@@ -24,78 +26,54 @@ int	parse_headers(int fd, t_config *cfg, char **line)
 			*line = get_next_line(fd);
 			continue;
 		}
-		if (parse_header_line(*line, cfg)) 
+		if (parse_header_line(*line, cfg))
 			break;
-		*line = get_next_line(fd);
+		tmp = get_next_line(fd);
+		free(*line);
+		*line = tmp;
 	}
 	if (!cfg->north || !cfg->south || !cfg->west || !cfg->east
 		|| cfg->floor[0] == -1 || cfg->ceiling[0] == -1)
 	{
-		ft_putstr_fd("Error\nMissing texture or color identifier\n", 2);
-		exit(1);
+		set_error_msg("Incomplete header information");
+		return (1);
 	}
 	return (0);
 }
 
 int parse_header_line(char *line, t_config *cfg)
 {
-    char *trimmed;
-    int res;
-
-    if (!line)
-        return (-1);
-    trimmed = trim_spaces(line);
-    if (!trimmed) {
-        free(line);
-        return (-1);
-    }
-    res = handle_header_value(trimmed, cfg);
-    free(trimmed);
-	if (res == 0)
-    	free(line);
-    return res;
-}
-
-char	*parse_texture(char *line)
-{
-	char	*path;
 	char	*trimmed;
-	int		fd;
+	int		res;
 
-	path = ft_strdup(line + 2);
-	if (!path)
-		return (NULL);
-	trimmed = trim_spaces(path);
-	free(path);
-	path = trimmed;
-	if (!path)
-		return (NULL);
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-	{
-		ft_putstr_fd("Error\nInvalid texture path: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd("\n", 2);
-		free(path);
-		return (NULL);
-	}
-	close(fd);
-	return (path);
+	if (!line)
+		return (-1);
+	trimmed = trim_spaces(line);
+	if (!trimmed)
+		return (-1);
+	res = handle_header_value(trimmed, cfg);
+	free(trimmed);
+	return (res);
 }
 
-int	parse_color(char *line, int color[3])
+int parse_color(char *line, int color[3])
 {
 	char	**parts;
+	char	*raw;
 	int		result;
 
-	if (!line || !color)
+	raw = line + 2;
+	if (!valid_color_commas(raw))
 		return (1);
-	parts = ft_split(line + 2, ',');
+	parts = ft_split(raw, ',');
 	if (!parts)
 		return (1);
 	result = validate_color_parts(parts, color);
-	free_split(parts);
 	if (result)
-		exit(1);
+	{
+		free_split(parts);
+		return (1);
+	}
+	free_split(parts);
 	return (0);
 }

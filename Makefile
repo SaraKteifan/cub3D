@@ -16,6 +16,7 @@ SRC_FILES   = main\
 			parsing/parse_file\
 			parsing/parse_headers\
 			parsing/parse_headers_2\
+			parsing/parse_texture\
 			parsing/parse_map\
 			parsing/parse_utils\
 			parsing/validate_map\

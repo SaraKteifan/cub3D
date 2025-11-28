@@ -38,19 +38,54 @@ static char **append_line(char **map, char *line)
 }
 int	parse_map(int fd, t_config *cfg, char *line)
 {
-	while (line && !is_line_empty(line))
+	char *tmp;
+	while (line)
 	{
 		replace_tabs_with_spaces(line);
+		if (is_line_empty(line))
+		{
+			/* skip leading empty lines before map starts */
+			if (!cfg->map)
+			{
+				free(line);
+				line = get_next_line(fd);
+				continue;
+			}
+			/* create a wall line with width = max existing line width or next non-empty line */
+			int maxw = 0;
+			for (int i = 0; cfg->map && cfg->map[i]; i++)
+				if ((int)ft_strlen(cfg->map[i]) > maxw) maxw = ft_strlen(cfg->map[i]);
+			if (maxw == 0)
+			{
+				tmp = get_next_line(fd);
+				if (tmp)
+				{
+					maxw = ft_strlen(tmp);
+					free(tmp);
+				}
+			}
+			if (maxw <= 0) { free(line); line = get_next_line(fd); continue; }
+			char *wall = malloc(maxw + 1);
+			if (!wall) free_all_and_exit(cfg, line);
+			for (int i = 0; i < maxw; ++i) wall[i] = '1';
+			wall[maxw] = '\0';
+			cfg->map = append_line(cfg->map, wall);
+			free(wall);
+			free(line);
+			line = get_next_line(fd);
+			continue;
+		}
 		cfg->map = append_line(cfg->map, line);
-        // if (line)
-		    free(line);
+		free(line);
 		line = get_next_line(fd);
 	}
-    // if(line)
 	free(line);
-    line = NULL;
+	line = NULL;
 	if (validate_map(cfg))
-		exit_str("Error\nInvalid map\n");
+	{
+		set_error_msg("Invalid map: map is not closed or player unreachable");
+		free_all_and_exit(cfg, NULL);
+	}
 	return (0);
 }
 

@@ -28,5 +28,5 @@ char	*save_remain(char *line);
 int		ft_strlen_gnl(char *s);
 char	*ft_strjoin_gnl(char *s1, char *s2);
 char	*ft_strchr_gnl(char *s, int c);
-
+void	free_gnl_static(void);
 #endif

@@ -94,8 +94,12 @@ int		is_valid_rgb_value(char *part);
 int		validate_color_parts(char **parts, int color[3]);
 int		is_duplicate_texture(char *id, t_config *cfg);
 int		is_duplicate_color(char id, t_config *cfg);
-void	validate_and_assign_texture(char **dst, char *line, char *id);
+int		validate_and_assign_texture(char **dst, char *line);
 int		handle_header_value(char *trimmed, t_config *cfg);
-int		parse_color(char *line, int color[3]);
+void	free_all_and_exit(t_config *cfg, char *line);
+void free_config(t_config *cfg);
+void	set_error_msg(const char *msg);
+int valid_color_commas(char *s);
 char	*parse_texture(char *line);
+int parse_color(char *line, int color[3]);
 #endif

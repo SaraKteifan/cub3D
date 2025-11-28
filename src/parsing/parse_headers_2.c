@@ -12,40 +12,37 @@
 
 #include "cub3d.h"
 
-void	validate_and_assign_texture(char **dst, char *line, char *id)
+/* validate_and_assign_texture: returns 0 on success, 1 on error */
+int validate_and_assign_texture(char **dst, char *line)
 {
-	char *new_path;
+	char *path;
 
-	new_path = parse_texture(line);
-	if (!new_path)
-	{
-		ft_putstr_fd("Error\nInvalid texture path: ", 2);
-		ft_putstr_fd(id, 2);
-		ft_putstr_fd("\n", 2);
-		exit(1);
-	}
-
+	path = parse_texture(line);
+	if (!path)
+		return (1); /* parse_texture sets error message */
 	if (*dst)
-		free(*dst);
-
-	*dst = new_path;
+	{
+		free(path);
+		set_error_msg("Duplicate texture identifier");
+		return (1);
+	}
+	*dst = path;
+	return (0);
 }
 
-int	handle_header_value(char *trimmed, t_config *cfg)
+int handle_header_value(char *trimmed, t_config *cfg)
 {
-	if (ft_strncmp(trimmed, "NO ", 3) == 0)
-		validate_and_assign_texture(&cfg->north, trimmed, "NO");
-	else if (ft_strncmp(trimmed, "SO ", 3) == 0)
-		validate_and_assign_texture(&cfg->south, trimmed, "SO");
-	else if (ft_strncmp(trimmed, "WE ", 3) == 0)
-		validate_and_assign_texture(&cfg->west, trimmed, "WE");
-	else if (ft_strncmp(trimmed, "EA ", 3) == 0)
-		validate_and_assign_texture(&cfg->east, trimmed, "EA");
-	else if (trimmed[0] == 'F' && trimmed[1] == ' ')
-		parse_color(trimmed, cfg->floor);
-	else if (trimmed[0] == 'C' && trimmed[1] == ' ')
-		parse_color(trimmed, cfg->ceiling);
-	else
-		return (1);
-	return (0);
+	if (ft_strncmp(trimmed, "NO", 2) == 0 && trimmed[2] == ' ')
+		return (validate_and_assign_texture(&cfg->north, trimmed));
+	else if (ft_strncmp(trimmed, "SO", 2) == 0 && trimmed[2] == ' ')
+		return (validate_and_assign_texture(&cfg->south, trimmed));
+	else if (ft_strncmp(trimmed, "WE", 2) == 0 && trimmed[2] == ' ')
+		return (validate_and_assign_texture(&cfg->west, trimmed));
+	else if (ft_strncmp(trimmed, "EA", 2) == 0 && trimmed[2] == ' ')
+		return (validate_and_assign_texture(&cfg->east, trimmed));
+	else if (ft_strncmp(trimmed, "F", 1) == 0 && trimmed[1] == ' ')
+		return (parse_color(trimmed, cfg->floor));
+	else if (ft_strncmp(trimmed, "C", 1) == 0 && trimmed[1] == ' ')
+		return (parse_color(trimmed, cfg->ceiling));
+	return (1);
 }

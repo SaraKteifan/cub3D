@@ -12,6 +12,8 @@
 
 #include "get_next_line.h"
 
+static char *gnl_remain = NULL;
+
 char	*read_fd(int fd, char *line)
 {
 	char	*buffer;
@@ -95,19 +97,23 @@ char	*save_remain(char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
 	char		*final;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	final = 0;
-	line = read_fd(fd, line);
-	if (!line)
-	{
-		free(line);
+	gnl_remain = read_fd(fd, gnl_remain);
+	if (!gnl_remain)
 		return (NULL);
-	}
-	final = set_line(line);
-	line = save_remain(line);
+	final = set_line(gnl_remain);
+	gnl_remain = save_remain(gnl_remain);
 	return (final);
+}
+void	free_gnl_static(void)
+{
+	if (gnl_remain)
+	{
+		free(gnl_remain);
+		gnl_remain = NULL;
+	}
 }
