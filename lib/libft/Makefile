@@ -37,7 +37,9 @@ FILES = ft_strlen \
 			 ft_strmapi \
 			 ft_striteri \
 			 ft_itoa \
-			 ft_strtrim
+			 ft_strtrim\
+			 get_next_line\
+			 get_next_line_utils
 
 BFILES = ft_lstnew_bonus \
 			 ft_lstadd_front_bonus \
