@@ -12,28 +12,69 @@
 
 #include "cub3d.h"
 
+void	clean_mlx_textures_and_img(t_game *game)
+{
+	if (game->frame)
+		mlx_delete_image(game->mlx, game->frame);
+	if (game->textures[NORTH])
+		mlx_delete_texture(game->textures[NORTH]);
+	if (game->textures[SOUTH])
+		mlx_delete_texture(game->textures[SOUTH]);
+	if (game->textures[EAST])
+		mlx_delete_texture(game->textures[EAST]);
+	if (game->textures[WEST])
+		mlx_delete_texture(game->textures[WEST]);
+}
+
+void cleanup_game(t_game *game)
+{
+	(void)game;
+	// clean_mlx_textures_and_img(game);
+
+	// free map
+	//free_map(game->config->map);
+
+	// free config structs
+	// free(game->config);
+}
+
 int	main(int ac, char **av)
 {
-	t_config	config;
-	int			status;
+	t_game	game;
+	int		status;
 
-	if (ac != 2)
-		exit_str("Error\nYou must provide exactly one argument\n");
-	init_config(&config);
-	status = parse_file(av[1], &config);
+	if(ac != 2)
+		print_error_msg("You must provide exactly one argument.");
+	init_game(&game);
+	if (init_config(&game.config) != 0)
+		return (1);
+	status = parse_file(av[1], game.config);
 	if (status != 0)
-		free_all_and_exit(&config, NULL);
-	printf("North: %s\n", config.north);
-	printf("South: %s\n", config.south);
-	printf("West: %s\n", config.west);
-	printf("East: %s\n", config.east);
-	printf("Floor: %d,%d,%d\n", config.floor[0], config.floor[1],
-		config.floor[2]);
-	printf("Ceiling: %d,%d,%d\n", config.ceiling[0], config.ceiling[1],
-		config.ceiling[2]);
-	for (int i = 0; config.map && config.map[i]; i++)
-		printf("%s", config.map[i]);
-	free_config(&config);
+		free_config_and_exit(game.config, NULL);
+	status = setup_game(&game);
+	if (status != 0)
+		print_error_msg("Game setup failed (textures?).");
+	status = render_frame(&game);
+	mlx_close_hook(game.mlx, close_hook, &game);
+	mlx_loop(game.mlx);
+	cleanup_game(&game);
+	mlx_terminate(game.mlx);
+	free_config(game.config);
 	free_gnl_static();
+
+	//printf("North: %s\n", game.config->north);
+	//printf("South: %s\n", game.config->south);
+	//printf("West: %s\n", game.config->west);
+	//printf("East: %s\n", game.config->east);
+	//printf("Floor: %d,%d,%d\n", game.config->floor[0], game.config->floor[1], game.config->floor[2]);
+	//printf("Ceiling: %d,%d,%d\n", game.config->ceiling[0], game.config->ceiling[1], game.config->ceiling[2]);
+
+	// for (int i = 0; game.config->map && game.config->map[i]; i++)
+	// printf("%s", game.config->map[i]);
+
+	// printf("\n");
+	// for (int i = 0; game.config->map && game.config->map[i]; i++)
+	// printf("%zu\n", ft_strlen(game.config->map[i]));
+
 	return (0);
 }

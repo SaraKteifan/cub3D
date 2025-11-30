@@ -3,42 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:12:54 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/24 16:09:34 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/11/29 13:02:14 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3d.h"
+#include "cub3d.h"
 
-static char **append_line(char **map, char *line)
+static char	**append_line(char **map, char *line)
 {
-    char    **new_map;
-    int     len;
-    int     i;
+	char	**new_map;
+	int		len;
+	int		i;
 
-    len = 0;
-    if (map)
-        while (map[len])
-            len++;
-    new_map = malloc(sizeof(char *) * (len + 2));
-    if (!new_map)
-        return (NULL);
-    i = 0;
-    while (i < len)
-    {
-        new_map[i] = map[i];
-        i++;
-    }
-    new_map[i++] = ft_strdup(line);
-    new_map[i] = NULL;
-    free(map);
-    return (new_map);
+	len = 0;
+	if (map)
+		while (map[len])
+			len++;
+	new_map = malloc(sizeof(char *) * (len + 2));
+	if (!new_map)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		new_map[i] = map[i];
+		i++;
+	}
+	new_map[i++] = ft_strdup(line);
+	new_map[i] = NULL;
+	free(map);
+	return (new_map);
 }
+
 int	parse_map(int fd, t_config *cfg, char *line)
 {
-	char *tmp;
+	char	*tmp;
+
 	while (line)
 	{
 		replace_tabs_with_spaces(line);
@@ -49,7 +51,7 @@ int	parse_map(int fd, t_config *cfg, char *line)
 			{
 				free(line);
 				line = get_next_line(fd);
-				continue;
+				continue ;
 			}
 			/* create a wall line with width = max existing line width or next non-empty line */
 			int maxw = 0;

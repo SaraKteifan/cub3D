@@ -25,6 +25,7 @@ int	is_map_line(char *line)
 		return (1);
 	return (0);
 }
+
 int	ft_is_number(char *str)
 {
 	int	i;
@@ -39,4 +40,21 @@ int	ft_is_number(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void	print_config_errors(t_config *cfg)
+{
+	ft_putstr_fd("Error\n", 2);
+	if (!cfg->north)
+		ft_putstr_fd("Missing north texture.\n", 2);
+	if (!cfg->south)
+		ft_putstr_fd("Missing south texture.\n", 2);
+	if (!cfg->west)
+		ft_putstr_fd("Missing west texture.\n", 2);
+	if (!cfg->east)
+		ft_putstr_fd("Missing east texture.\n", 2);
+	if (cfg->floor[0] == -1 || cfg->floor[1] == -1 || cfg->floor[2] == -1)
+		ft_putstr_fd("Invalid floor color.\n", 2);
+	if (cfg->ceiling[0] == -1 || cfg->ceiling[1] == -1 || cfg->ceiling[2] == -1)
+		ft_putstr_fd("Invalid ceiling color.\n", 2);
 }

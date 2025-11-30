@@ -12,22 +12,23 @@
 
 #include "cub3d.h"
 
-static int check_map_size(char **map)
+static int	check_map_size(char **map)
 {
-    int rows = 0;
-    int cols = 0;
+	int	rows = 0;
+	int	cols = 0;
 
-    while (map[rows])
-    {
-        int len = ft_strlen(map[rows]);
-        if (len > cols)
-            cols = len;
-        rows++;
-    }
-    if (rows < 3 || cols < 3)
-        return (1);
-    return (0);
+	while (map[rows])
+	{
+		int len = ft_strlen(map[rows]);
+		if (len > cols)
+			cols = len;
+		rows++;
+	}
+	if (rows < 3 || cols < 3)
+		return (1);
+	return (0);
 }
+
 static char	**duplicate_map(char **map)
 {
 	int		y;
@@ -51,30 +52,30 @@ static char	**duplicate_map(char **map)
 	return (copy);
 }
 
-static int find_player_pos(char **map, int *px, int *py)
+static int	find_player_pos(char **map, int *px, int *py)
 {
-    int y = 0;
-    int x;
-    int player_count = 0;
+	int	y = 0;
+	int	x;
+	int	player_count = 0;
 
-    while (map[y])
-    {
-        x = 0;
-        while (map[y][x])
-        {
-            if (ft_strchr("NSEW", map[y][x]))
-            {
-                *px = x;
-                *py = y;
-                player_count++;
-            }
-            x++;
-        }
-        y++;
-    }
-    if (player_count != 1)
-        return (1);
-    return (0);
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (ft_strchr("NSEW", map[y][x]))
+			{
+				*px = x;
+				*py = y;
+				player_count++;
+			}
+			x++;
+		}
+		y++;
+	}
+	if (player_count != 1)
+		return (1);
+	return (0);
 }
 
 static int	flood_fill(char **map, int x, int y)
@@ -114,13 +115,13 @@ int	validate_map(t_config *cfg)
 		return (1);
 	if (check_map_size(cfg->map))
 	{
-	    free_split(copy);
-	    return (1);
+		free_split(copy);
+		return (1);
 	}
 	if (find_player_pos(copy, &px, &py))
 	{
-	    free_split(copy);
-	    return (1);
+		free_split(copy);
+		return (1);
 	}
 	result = flood_fill(copy, px, py);
 	free_split(copy);
