@@ -15,6 +15,7 @@
 void cleanup_game(t_game *game)
 {
 	(void)game;
+	free_all_and_exit(game);
 	// clean_mlx_textures_and_img(game);
 
 	// free map
@@ -46,12 +47,12 @@ int	main(int ac, char **av)
 	free_all_and_exit(&game);
 
 
-	//printf("North: %s\n", game.config->north);
-	//printf("South: %s\n", game.config->south);
-	//printf("West: %s\n", game.config->west);
-	//printf("East: %s\n", game.config->east);
-	//printf("Floor: %d,%d,%d\n", game.config->floor[0], game.config->floor[1], game.config->floor[2]);
-	//printf("Ceiling: %d,%d,%d\n", game.config->ceiling[0], game.config->ceiling[1], game.config->ceiling[2]);
+	// printf("North: %s\n", game.config->north);
+	// printf("South: %s\n", game.config->south);
+	// printf("West: %s\n", game.config->west);
+	// printf("East: %s\n", game.config->east);
+	// printf("Floor: %d,%d,%d\n", game.config->floor[0], game.config->floor[1], game.config->floor[2]);
+	// printf("Ceiling: %d,%d,%d\n", game.config->ceiling[0], game.config->ceiling[1], game.config->ceiling[2]);
 
 	// for (int i = 0; game.config->map && game.config->map[i]; i++)
 	// printf("%s", game.config->map[i]);

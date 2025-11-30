@@ -6,7 +6,7 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 13:40:16 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/29 15:50:27 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/11/30 15:58:03 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,11 @@ void	replace_tabs_with_spaces(char *line)
 			line[i] = ' ';
 		i++;
 	}
+}
+
+void	print_error_msg(char *msg)
+{
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
 }

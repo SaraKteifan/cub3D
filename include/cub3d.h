@@ -138,10 +138,10 @@ int			validate_and_assign_texture(char **dst, char *line);
 int			handle_header_value(char *trimmed, t_config *cfg);
 void		free_config_and_exit(t_config *cfg, char *line);
 void		free_config(t_config *cfg);
-// void		set_error_msg(const char *msg);
 int			valid_color_commas(char *s);
 char		*parse_texture(char *line);
-int			parse_color(char *line, int color[3]);
+int			parse_color(char *line, int color[3], t_config *cfg);
+int			only_map_chars(char **map);
 
 int			setup_game(t_game *game);
 int			setup_player_from_map(t_config *config, t_player *player);
@@ -158,5 +158,6 @@ void		cleanup_game(t_game *game);
 void		draw_minimap(t_game *game);
 void		clean_mlx_resources(t_game *game);
 void		free_all_and_exit(t_game *game);
+void		print_config_errors(t_config *cfg);
 
 #endif

@@ -19,11 +19,16 @@ int	is_map_line(char *line)
 	i = 0;
 	while (line[i] && line[i] == ' ')
 		i++;
-	if (line[i] == '1' || line[i] == '0'
-		|| line[i] == 'N' || line[i] == 'S'
-		|| line[i] == 'E' || line[i] == 'W')
-		return (1);
-	return (0);
+	while (line[i])
+	{
+		if (!(line[i] == '1' || line[i] == '0'
+			|| line[i] == 'N' || line[i] == 'S'
+			|| line[i] == 'E' || line[i] == 'W'
+			|| line[i] == '\n' || line[i] == ' '))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	ft_is_number(char *str)

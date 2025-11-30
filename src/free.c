@@ -6,30 +6,11 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 16:50:32 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/30 10:25:36 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/11/30 13:50:13 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// static char *g_error_msg = NULL;
-
-// void	set_error_msg(const char *msg)
-// {
-// 	if (g_error_msg)
-// 		free(g_error_msg);
-// 	if (!msg)
-// 		g_error_msg = NULL;
-// 	else
-// 		g_error_msg = ft_strdup(msg);
-// }
-
-void	print_error_msg(char *msg)
-{
-	ft_putstr_fd("Error\n", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
-}
 
 void	free_split(char **arr)
 {
@@ -65,6 +46,7 @@ void	free_config(t_config *cfg)
 		}
 		free(cfg->map);
 	}
+	free(cfg);
 }
 
 void	clean_mlx_resources(t_game *game)
@@ -86,23 +68,10 @@ void	clean_mlx_resources(t_game *game)
 
 void	free_config_and_exit(t_config *cfg, char *line)
 {
-	// if (g_error_msg)
-	// {
-	// 	ft_putstr_fd("Error\n", 2);
-	// 	ft_putstr_fd(g_error_msg, 2);
-	// 	ft_putstr_fd("\n", 2);
-	// }
-	// else
-		// ft_putstr_fd("Error\n", 2);
 	if (line)
 		free(line);
 	free_config(cfg);
 	free_gnl_static();
-	// if (g_error_msg)
-	// {
-	// 	free(g_error_msg);
-	// 	g_error_msg = NULL;
-	// }
 	exit(1);
 }
 

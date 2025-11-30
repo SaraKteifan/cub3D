@@ -12,6 +12,20 @@
 
 #include "cub3d.h"
 
+static int	is_png(char *path)
+{
+	int	len;
+
+	len = ft_strlen(path);
+	if (len < 4 || ft_strncmp(path + len - 4, ".png", 4) != 0)
+	{
+		print_error_msg("Invalid extension for the texture.");
+		free(path);
+		return (1);
+	}
+	return (0);
+}
+
 char	*parse_texture(char *line)
 {
 	char	*path;
@@ -26,11 +40,13 @@ char	*parse_texture(char *line)
 	free(path);
 	if (!trimmed)
 		return (NULL);
+	if (is_png(trimmed))
+		return (NULL);
 	fd = open(trimmed, O_RDONLY);
 	if (fd < 0)
 	{
 		err = ft_strjoin("Invalid texture path: ", trimmed);
-		set_error_msg(err);
+		print_error_msg(err);
 		free(err);
 		free(trimmed);
 		return (NULL);
@@ -50,7 +66,7 @@ int	validate_and_assign_texture(char **dst, char *line)
 	if (*dst)
 	{
 		free(path);
-		set_error_msg("Duplicate texture identifier");
+		print_error_msg("Duplicate texture identifier");
 		return (1);
 	}
 	*dst = path;

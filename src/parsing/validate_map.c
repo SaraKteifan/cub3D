@@ -100,7 +100,6 @@ static int	flood_fill(char **map, int x, int y)
 	}
 	return (0);
 }
-
 int	validate_map(t_config *cfg)
 {
 	char	**copy;
@@ -110,6 +109,8 @@ int	validate_map(t_config *cfg)
 
 	if (!cfg || !cfg->map)
 		return (1);
+	// if(only_map_chars(cfg->map))
+	// 	return (1);
 	copy = duplicate_map(cfg->map);
 	if (!copy)
 		return (1);
@@ -127,3 +128,4 @@ int	validate_map(t_config *cfg)
 	free_split(copy);
 	return (result);
 }
+

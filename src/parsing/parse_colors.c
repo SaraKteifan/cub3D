@@ -6,7 +6,7 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:09:16 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/29 22:20:43 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/11/30 15:40:29 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,16 @@ int	validate_color_parts(char **parts, int color[3])
 //	return (0);
 //}
 
-//int	is_duplicate_color(char id, t_config *cfg)
-//{
-//	if ((id == 'F' && cfg->floor[0] != -1)
-//		|| (id == 'C' && cfg->ceiling[0] != -1))
-//	{
-//		ft_putstr_fd("Error\nDuplicate color identifier\n", 2);
-//		return (1);
-//	}
-//	return (0);
-//}
+int	is_duplicate_color(char id, t_config *cfg)
+{
+	if ((id == 'F' && cfg->floor[0] != -1)
+		|| (id == 'C' && cfg->ceiling[0] != -1))
+	{
+		ft_putstr_fd("Error\nDuplicate color identifier\n", 2);
+		return (1);
+	}
+	return (0);
+}
 
 int	valid_color_commas(char *s)
 {
@@ -99,13 +99,17 @@ int	valid_color_commas(char *s)
 	return (1);
 }
 
-int	parse_color(char *line, int color[3])
+int	parse_color(char *line, int color[3], t_config *cfg)
 {
 	char	**parts;
 	char	*raw;
 	int		result;
 
-	raw = line + 2;
+	if (is_duplicate_color(line[0], cfg))
+		return (1);
+	raw = line + 1;
+	while (*raw == ' ' || *raw == '\t')
+		raw++;
 	if (!valid_color_commas(raw))
 		return (1);
 	parts = ft_split(raw, ',');
