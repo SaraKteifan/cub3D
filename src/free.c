@@ -6,7 +6,7 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 16:50:32 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/29 16:23:04 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/11/30 10:25:36 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,23 @@ void	free_config(t_config *cfg)
 	}
 }
 
+void	clean_mlx_resources(t_game *game)
+{
+	if (game->frame)
+		mlx_delete_image(game->mlx, game->frame);
+	if (game->minimap)
+		mlx_delete_image(game->mlx, game->minimap);
+	if (game->textures[NORTH])
+		mlx_delete_texture(game->textures[NORTH]);
+	if (game->textures[SOUTH])
+		mlx_delete_texture(game->textures[SOUTH]);
+	if (game->textures[EAST])
+		mlx_delete_texture(game->textures[EAST]);
+	if (game->textures[WEST])
+		mlx_delete_texture(game->textures[WEST]);
+	mlx_terminate(game->mlx);
+}
+
 void	free_config_and_exit(t_config *cfg, char *line)
 {
 	// if (g_error_msg)
@@ -86,5 +103,14 @@ void	free_config_and_exit(t_config *cfg, char *line)
 	// 	free(g_error_msg);
 	// 	g_error_msg = NULL;
 	// }
+	exit(1);
+}
+
+void	free_all_and_exit(t_game *game)
+{
+	free_config(game->config);
+	free_gnl_static();
+	free(game->player);
+	clean_mlx_resources(game);
 	exit(1);
 }

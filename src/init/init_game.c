@@ -40,9 +40,13 @@ int	setup_game(t_game *game)
 	// map_padding(game, game->config->map);
 	game->player = malloc(sizeof(t_player));
 	if (!game->player)
+	{
+		print_error_msg("Malloc failed.");
 		return (1);
+	}
 	init_player(game->player);
-	setup_player_from_map(game->config, game->player);
+	if (setup_player_from_map(game->config, game->player) != 0)
+		return (1);
 	if (init_mlx(game) != 0)
 		return (1);
 	game->ceiling_color = rgb_to_uint32(game->config->ceiling);

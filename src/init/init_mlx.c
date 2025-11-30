@@ -12,17 +12,63 @@
 
 #include "cub3d.h"
 
+int	init_frame(t_game *game)
+{
+	game->frame = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	if (!game->frame)
+	{
+		print_error_msg((char *)mlx_strerror(mlx_errno));
+		return (1);
+	}
+	if (mlx_image_to_window(game->mlx, game->frame, 0, 0) == -1)
+	{
+		print_error_msg((char *)mlx_strerror(mlx_errno));
+		return (1);
+	}
+	return (0);
+}
+
+int	init_minimap(t_game *game)
+{
+	game->minimap = mlx_new_image(game->mlx, 150, 150);
+	if (!game->minimap)
+	{
+		print_error_msg((char *)mlx_strerror(mlx_errno));
+		return (1);
+	}
+	if (mlx_image_to_window(game->mlx, game->minimap, 10, 10) == -1)
+	{
+		print_error_msg((char *)mlx_strerror(mlx_errno));
+		return (1);
+	}
+	return (0);
+}
+
 int	init_textures(t_game *game)
 {
 	game->textures[NORTH] = mlx_load_png(game->config->north);
-	game->textures[SOUTH] = mlx_load_png(game->config->south);
-	game->textures[WEST] = mlx_load_png(game->config->west);
-	game->textures[EAST] = mlx_load_png(game->config->east);
-	if (!game->textures[NORTH] || !game->textures[SOUTH]
-		||!game->textures[WEST] || !game->textures[EAST])
+	if (!game->textures[NORTH])
 	{
-		ft_putstr_fd("Failed to load texture\n", 2);
-		return (1);
+		print_error_msg("Failed to load texture NORTH.");
+		return(1);
+	}
+	game->textures[SOUTH] = mlx_load_png(game->config->south);
+	if (!game->textures[SOUTH])
+	{
+		print_error_msg("Failed to load texture SOUTH.");
+		return(1);
+	}
+	game->textures[WEST] = mlx_load_png(game->config->west);
+	if (!game->textures[WEST])
+	{
+		print_error_msg("Failed to load texture WEST.");
+		return(1);
+	}
+	game->textures[EAST] = mlx_load_png(game->config->east);
+	if (!game->textures[EAST])
+	{
+		print_error_msg("Failed to load texture EAST.");
+		return(1);
 	}
 	return (0);
 }
@@ -32,21 +78,24 @@ int	init_mlx(t_game *game)
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", true);
 	if (!game->mlx)
 	{
-		ft_putstr_fd((char *)mlx_strerror(mlx_errno), 2);
+		print_error_msg((char *)mlx_strerror(mlx_errno));
 		return (1);
 	}
-	game->frame = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	if (!game->frame)
+	if (init_frame(game) != 0)
 	{
-		ft_putstr_fd((char *)mlx_strerror(mlx_errno), 2);
-		mlx_terminate(game->mlx);
+		clean_mlx_resources(game);
 		return (1);
 	}
-	mlx_image_to_window(game->mlx, game->frame, 0, 0);
-	game->minimap = mlx_new_image(game->mlx, 150, 150);
-	mlx_image_to_window(game->mlx, game->minimap, 10, 10);
-	if (init_textures(game) != 0)
+	if (init_minimap(game) != 0)
+	{
+		clean_mlx_resources(game);
 		return (1);
+	}
+	if (init_textures(game) != 0)
+	{
+		clean_mlx_resources(game);
+		return (1);
+	}
 	mlx_loop_hook(game->mlx, &key_hook, game);
 	return (0);
 }

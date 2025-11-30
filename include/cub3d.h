@@ -144,7 +144,7 @@ char		*parse_texture(char *line);
 int			parse_color(char *line, int color[3]);
 
 int			setup_game(t_game *game);
-void		setup_player_from_map(t_config *config, t_player *player);
+int			setup_player_from_map(t_config *config, t_player *player);
 int			init_mlx(t_game *game);
 void		init_ray(t_ray *ray);
 int			render_frame(t_game *game);
@@ -156,5 +156,7 @@ uint32_t	get_tex_pixel_color(mlx_texture_t *tex, int tex_x, int tex_y);
 void		close_hook(void *param);
 void		cleanup_game(t_game *game);
 void		draw_minimap(t_game *game);
+void		clean_mlx_resources(t_game *game);
+void		free_all_and_exit(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:12:54 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/29 13:02:14 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/11/30 10:23:37 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	parse_map(int fd, t_config *cfg, char *line)
 			}
 			if (maxw <= 0) { free(line); line = get_next_line(fd); continue; }
 			char *wall = malloc(maxw + 1);
-			if (!wall) free_all_and_exit(cfg, line);
+			if (!wall) free_config_and_exit(cfg, line);
 			for (int i = 0; i < maxw; ++i) wall[i] = '1';
 			wall[maxw] = '\0';
 			cfg->map = append_line(cfg->map, wall);
@@ -86,7 +86,7 @@ int	parse_map(int fd, t_config *cfg, char *line)
 	if (validate_map(cfg))
 	{
 		set_error_msg("Invalid map: map is not closed or player unreachable");
-		free_all_and_exit(cfg, NULL);
+		free_config_and_exit(cfg, NULL);
 	}
 	return (0);
 }

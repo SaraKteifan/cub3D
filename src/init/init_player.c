@@ -76,11 +76,17 @@ void	calculate_camera_plane(t_player *player)
 	player->plane_y = player->dir_x * FOV_FACTOR;
 }
 
-void	setup_player_from_map(t_config *config, t_player *player)
+int	setup_player_from_map(t_config *config, t_player *player)
 {
 	char	pos;
 
 	pos = set_player_start_position(config->map, player);
+	if (!pos)
+	{
+		print_error_msg("Player not found.");
+		return (1);
+	}
 	set_player_start_direction_vector(pos, player);
 	calculate_camera_plane(player);
+	return (0);
 }

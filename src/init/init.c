@@ -6,7 +6,7 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 11:30:19 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/29 13:50:04 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/11/30 09:06:29 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	init_config(t_config **cfg)
 	*cfg = malloc(sizeof(t_config));
 	if (!*cfg)
 	{
-		ft_putstr_fd("Error\nMalloc Failed!\n", 2);
+		print_error_msg("Malloc failed.");
 		return (1);
 	}
 	(*cfg)->north = NULL;

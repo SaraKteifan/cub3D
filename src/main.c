@@ -12,20 +12,6 @@
 
 #include "cub3d.h"
 
-void	clean_mlx_textures_and_img(t_game *game)
-{
-	if (game->frame)
-		mlx_delete_image(game->mlx, game->frame);
-	if (game->textures[NORTH])
-		mlx_delete_texture(game->textures[NORTH]);
-	if (game->textures[SOUTH])
-		mlx_delete_texture(game->textures[SOUTH]);
-	if (game->textures[EAST])
-		mlx_delete_texture(game->textures[EAST]);
-	if (game->textures[WEST])
-		mlx_delete_texture(game->textures[WEST]);
-}
-
 void cleanup_game(t_game *game)
 {
 	(void)game;
@@ -53,14 +39,12 @@ int	main(int ac, char **av)
 		free_config_and_exit(game.config, NULL);
 	status = setup_game(&game);
 	if (status != 0)
-		print_error_msg("Game setup failed (textures?).");
+		free_all_and_exit(&game);
 	status = render_frame(&game);
 	mlx_close_hook(game.mlx, close_hook, &game);
 	mlx_loop(game.mlx);
-	cleanup_game(&game);
-	mlx_terminate(game.mlx);
-	free_config(game.config);
-	free_gnl_static();
+	free_all_and_exit(&game);
+
 
 	//printf("North: %s\n", game.config->north);
 	//printf("South: %s\n", game.config->south);
