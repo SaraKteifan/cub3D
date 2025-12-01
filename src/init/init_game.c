@@ -3,41 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 21:53:49 by skteifan          #+#    #+#             */
-/*   Updated: 2025/11/23 21:53:49 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:00:38 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// int	get_longest_row(char **map)
-// {
-// 	int	i;
-// 	int	longest;
-
-// 	i = 0;
-// 	longest = ft_strlen(map[0]);
-// 	while (map[i])
-// 	{
-// 		if (ft_strlen(map[i]) > longest)
-// 			longest = ft_strlen(map[i]);
-// 		i++;
-// 	}
-// 	return (longest);
-// }
-
-// void	map_padding(t_game *game, char **map)
-// {
-// 	int	longest;
-
-// 	longest = get_longest_row(map);
-// }
-
 int	setup_game(t_game *game)
 {
-	// map_padding(game, game->config->map);
 	game->player = malloc(sizeof(t_player));
 	if (!game->player)
 	{

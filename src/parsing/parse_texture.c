@@ -55,14 +55,13 @@ char	*parse_texture(char *line)
 	return (trimmed);
 }
 
-/* validate_and_assign_texture: returns 0 on success, 1 on error */
 int	validate_and_assign_texture(char **dst, char *line)
 {
 	char	*path;
 
 	path = parse_texture(line);
 	if (!path)
-		return (1); /* parse_texture sets error message */
+		return (1);
 	if (*dst)
 	{
 		free(path);

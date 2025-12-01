@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_colors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:09:16 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/30 15:40:29 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 10:42:23 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	is_valid_rgb_value(char *part)
-{
-	int	value;
-
-	if (!ft_is_number(part))
-		return (0);
-	value = ft_atoi(part);
-	if (value < 0 || value > 255)
-		return (0);
-	return (1);
-}
 
 int	validate_color_parts(char **parts, int color[3])
 {
@@ -47,19 +35,6 @@ int	validate_color_parts(char **parts, int color[3])
 	return (0);
 }
 
-//int	is_duplicate_texture(char *id, t_config *cfg)
-//{
-//	if ((ft_strncmp(id, "NO ", 3) == 0 && cfg->north)
-//		|| (ft_strncmp(id, "SO ", 3) == 0 && cfg->south)
-//		|| (ft_strncmp(id, "WE ", 3) == 0 && cfg->west)
-//		|| (ft_strncmp(id, "EA ", 3) == 0 && cfg->east))
-//	{
-//		ft_putstr_fd("Error\nDuplicate texture identifier\n", 2);
-//		return (1);
-//	}
-//	return (0);
-//}
-
 int	is_duplicate_color(char id, t_config *cfg)
 {
 	if ((id == 'F' && cfg->floor[0] != -1)
@@ -71,28 +46,42 @@ int	is_duplicate_color(char id, t_config *cfg)
 	return (0);
 }
 
+static int	check_comma_char(char c, int *last_was_comma, int *commas)
+{
+	if (c == ',')
+	{
+		if (*last_was_comma)
+			return (0);
+		(*commas)++;
+		*last_was_comma = 1;
+		return (1);
+	}
+	if (c >= '0' && c <= '9')
+	{
+		*last_was_comma = 0;
+		return (1);
+	}
+	if (c == ' ' || c == '\t')
+		return (1);
+	return (0);
+}
+
 int	valid_color_commas(char *s)
 {
-	int	i = 0;
-	int	commas = 0;
-	int	last_was_comma = 0;
+	int	i;
+	int	commas;
+	int	last_was_comma;
 
+	i = 0;
+	commas = 0;
+	last_was_comma = 0;
 	while (s[i])
 	{
-		if (s[i] == ',')
-		{
-			if (last_was_comma) // consecutive commas → error
-				return (0);
-			commas++;
-			last_was_comma = 1;
-		}
-		else if (s[i] >= '0' && s[i] <= '9')
-			last_was_comma = 0;
-		else if (s[i] != ' ' && s[i] != '\t')
+		if (!check_comma_char(s[i], &last_was_comma, &commas))
 			return (0);
 		i++;
 	}
-	if (last_was_comma) // ends with comma → error
+	if (last_was_comma)
 		return (0);
 	if (commas != 2)
 		return (0);

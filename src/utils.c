@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 13:40:16 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/30 15:58:03 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 10:32:23 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	exit_str(char *msg)
 	exit(1);
 }
 
-int is_line_empty(const char *line)
+int	is_line_empty(const char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if(!line)
+	if (!line)
 		return (1);
-	while(line[i])
+	while (line[i])
 	{
 		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
 			return (0);
@@ -34,6 +34,7 @@ int is_line_empty(const char *line)
 	}
 	return (1);
 }
+
 char	*trim_spaces(char *str)
 {
 	int		start;
@@ -46,7 +47,8 @@ char	*trim_spaces(char *str)
 	while (str[start] && (str[start] == ' ' || str[start] == '\t'))
 		start++;
 	end = ft_strlen(str) - 1;
-	while (end >= start && (str[end] == ' ' || str[end] == '\t' || str[end] == '\n'))
+	while (end >= start && (str[end] == ' ' || str[end] == '\t'
+			|| str[end] == '\n'))
 		end--;
 	res = ft_substr(str, start, end - start + 1);
 	return (res);

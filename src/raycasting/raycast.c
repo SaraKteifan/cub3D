@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 11:42:41 by skteifan          #+#    #+#             */
-/*   Updated: 2025/11/27 16:00:54 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:28:48 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	compute_perp_wall_dist(t_player *player, t_ray *ray)
 
 void	compute_wall_height(t_ray *ray)
 {
+	if (ray->perp_wall_dist < 0.0001f)
+		ray->perp_wall_dist = 0.0001f;
 	ray->line_height = (int)(HEIGHT / ray->perp_wall_dist);
 	ray->draw_start = -ray->line_height / 2 + HEIGHT / 2;
 	if (ray->draw_start < 0)

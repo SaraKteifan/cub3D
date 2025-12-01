@@ -22,9 +22,9 @@ int	is_map_line(char *line)
 	while (line[i])
 	{
 		if (!(line[i] == '1' || line[i] == '0'
-			|| line[i] == 'N' || line[i] == 'S'
-			|| line[i] == 'E' || line[i] == 'W'
-			|| line[i] == '\n' || line[i] == ' '))
+				|| line[i] == 'N' || line[i] == 'S'
+				|| line[i] == 'E' || line[i] == 'W'
+				|| line[i] == '\n' || line[i] == ' '))
 			return (0);
 		i++;
 	}
@@ -62,4 +62,16 @@ void	print_config_errors(t_config *cfg)
 		ft_putstr_fd("Invalid floor color.\n", 2);
 	if (cfg->ceiling[0] == -1 || cfg->ceiling[1] == -1 || cfg->ceiling[2] == -1)
 		ft_putstr_fd("Invalid ceiling color.\n", 2);
+}
+
+int	is_valid_rgb_value(char *part)
+{
+	int	value;
+
+	if (!ft_is_number(part))
+		return (0);
+	value = ft_atoi(part);
+	if (value < 0 || value > 255)
+		return (0);
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_headers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:12:50 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/30 15:39:46 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 10:42:58 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	parse_header_line(char *line, t_config *cfg)
 	char	*trimmed;
 	int		res;
 
-	// if (!line)
-	// 	return (1);
 	trimmed = trim_spaces(line);
 	if (!trimmed)
 	{

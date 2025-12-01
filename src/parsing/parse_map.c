@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:12:54 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/30 16:48:41 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 10:46:00 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,34 +34,44 @@ static char	**append_line(char **map, char *line)
 		new_map[i] = map[i];
 		i++;
 	}
-	new_map[i++] = ft_strdup(line); // needs malloc fail handling
+	new_map[i++] = ft_strdup(line);
 	new_map[i] = NULL;
 	free(map);
 	return (new_map);
 }
 
+static int	handle_map_line(t_config *cfg, char *line, int *flag)
+{
+	if (line[0] == '\n')
+	{
+		*flag = 1;
+		return (0);
+	}
+	if (*flag == 1)
+	{
+		print_error_msg("Empty line in map.");
+		return (1);
+	}
+	if (!is_map_line(line))
+	{
+		print_error_msg("Invalid character in map.");
+		return (1);
+	}
+	cfg->map = append_line(cfg->map, line);
+	return (0);
+}
+
 int	parse_map(int fd, t_config *cfg, char *line)
 {
-	int	flag = 0;
+	int	flag;
+
+	flag = 0;
 	while (line)
 	{
-		if (line && line[0] == '\n')
-			flag = 1;
-		else
+		if (handle_map_line(cfg, line, &flag))
 		{
-			if (flag == 1)
-			{
-				free(line);
-				print_error_msg("Empty line in map.");
-				return(1);
-			}
-			if (!is_map_line(line))
-			{
-				print_error_msg("Invalid character in map.");
-				free(line);
-				return (1);
-			}
-			cfg->map = append_line(cfg->map, line);
+			free(line);
+			return (1);
 		}
 		free(line);
 		line = get_next_line(fd);
@@ -73,5 +83,3 @@ int	parse_map(int fd, t_config *cfg, char *line)
 	}
 	return (0);
 }
-
-

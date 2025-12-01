@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 22:49:57 by skteifan          #+#    #+#             */
-/*   Updated: 2025/11/23 22:49:57 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:13:39 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,25 @@ int	init_textures(t_game *game)
 	if (!game->textures[NORTH])
 	{
 		print_error_msg("Failed to load texture NORTH.");
-		return(1);
+		return (1);
 	}
 	game->textures[SOUTH] = mlx_load_png(game->config->south);
 	if (!game->textures[SOUTH])
 	{
 		print_error_msg("Failed to load texture SOUTH.");
-		return(1);
+		return (1);
 	}
 	game->textures[WEST] = mlx_load_png(game->config->west);
 	if (!game->textures[WEST])
 	{
 		print_error_msg("Failed to load texture WEST.");
-		return(1);
+		return (1);
 	}
 	game->textures[EAST] = mlx_load_png(game->config->east);
 	if (!game->textures[EAST])
 	{
 		print_error_msg("Failed to load texture EAST.");
-		return(1);
+		return (1);
 	}
 	return (0);
 }

@@ -14,12 +14,15 @@
 
 static int	check_map_size(char **map)
 {
-	int	rows = 0;
-	int	cols = 0;
+	int	rows;
+	int	cols;
+	int	len;
 
+	rows = 0;
+	cols = 0;
 	while (map[rows])
 	{
-		int len = ft_strlen(map[rows]);
+		len = ft_strlen(map[rows]);
 		if (len > cols)
 			cols = len;
 		rows++;
@@ -54,10 +57,12 @@ static char	**duplicate_map(char **map)
 
 static int	find_player_pos(char **map, int *px, int *py)
 {
-	int	y = 0;
+	int	y;
 	int	x;
-	int	player_count = 0;
+	int	player_count;
 
+	player_count = 0;
+	y = 0;
 	while (map[y])
 	{
 		x = 0;
@@ -80,9 +85,9 @@ static int	find_player_pos(char **map, int *px, int *py)
 
 static int	flood_fill(char **map, int x, int y)
 {
-	int	dx[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
-	int	dy[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
-	int	i;
+	static int	dx[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+	static int	dy[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+	int			i;
 
 	if (y < 0 || x < 0 || !map[y] || x >= (int)ft_strlen(map[y]))
 		return (1);
@@ -100,6 +105,7 @@ static int	flood_fill(char **map, int x, int y)
 	}
 	return (0);
 }
+
 int	validate_map(t_config *cfg)
 {
 	char	**copy;
@@ -109,8 +115,6 @@ int	validate_map(t_config *cfg)
 
 	if (!cfg || !cfg->map)
 		return (1);
-	// if(only_map_chars(cfg->map))
-	// 	return (1);
 	copy = duplicate_map(cfg->map);
 	if (!copy)
 		return (1);
@@ -128,4 +132,3 @@ int	validate_map(t_config *cfg)
 	free_split(copy);
 	return (result);
 }
-
