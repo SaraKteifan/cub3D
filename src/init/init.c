@@ -6,7 +6,7 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 11:30:19 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/30 11:22:51 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:40:05 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	init_config(t_config **cfg)
 	(*cfg)->ceiling[1] = -1;
 	(*cfg)->ceiling[2] = -1;
 	(*cfg)->map = NULL;
-	(*cfg)->map_width = 10;
-	(*cfg)->map_height = 10;
 	return (0);
 }
 
@@ -62,7 +60,6 @@ void	init_game(t_game *game)
 	game->textures[SOUTH] = NULL;
 	game->textures[WEST] = NULL;
 	game->textures[EAST] = NULL;
-	game->minimap = NULL;
 }
 
 void	init_ray(t_ray *ray)

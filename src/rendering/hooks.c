@@ -6,7 +6,7 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 09:59:22 by skteifan          #+#    #+#             */
-/*   Updated: 2025/11/27 16:02:10 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:40:09 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,4 @@ void	key_hook(void *param)
 		player_rotate(game, -1);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		player_rotate(game, +1);
-	draw_minimap(game);
 }

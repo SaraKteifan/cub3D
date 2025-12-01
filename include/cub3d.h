@@ -54,8 +54,6 @@ typedef struct s_config
 	int		floor[3];
 	int		ceiling[3];
 	char	**map;
-	int		map_width;
-	int		map_height;
 }	t_config;
 
 typedef struct s_player
@@ -77,7 +75,6 @@ typedef struct s_game
 	uint32_t		floor_color;
 	uint32_t		ceiling_color;
 	mlx_texture_t	*textures[4];
-	mlx_image_t		*minimap;
 }	t_game;
 
 /* | Field                          | Purpose                                |
@@ -155,7 +152,6 @@ uint32_t	rgb_to_uint32(int rgb[3]);
 uint32_t	get_tex_pixel_color(mlx_texture_t *tex, int tex_x, int tex_y);
 void		close_hook(void *param);
 void		cleanup_game(t_game *game);
-void		draw_minimap(t_game *game);
 void		clean_mlx_resources(t_game *game);
 void		free_all_and_exit(t_game *game);
 void		print_config_errors(t_config *cfg);

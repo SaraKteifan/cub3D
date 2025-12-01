@@ -6,7 +6,7 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 16:50:32 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/30 13:50:13 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:39:42 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void	clean_mlx_resources(t_game *game)
 {
 	if (game->frame)
 		mlx_delete_image(game->mlx, game->frame);
-	if (game->minimap)
-		mlx_delete_image(game->mlx, game->minimap);
 	if (game->textures[NORTH])
 		mlx_delete_texture(game->textures[NORTH]);
 	if (game->textures[SOUTH])

@@ -19,7 +19,6 @@ static int	is_png(char *path)
 	len = ft_strlen(path);
 	if (len < 4 || ft_strncmp(path + len - 4, ".png", 4) != 0)
 	{
-		print_error_msg("Invalid extension for the texture.");
 		free(path);
 		return (1);
 	}
@@ -31,7 +30,6 @@ char	*parse_texture(char *line)
 	char	*path;
 	char	*trimmed;
 	int		fd;
-	char	*err;
 
 	path = ft_strdup(line + 2);
 	if (!path)
@@ -45,9 +43,6 @@ char	*parse_texture(char *line)
 	fd = open(trimmed, O_RDONLY);
 	if (fd < 0)
 	{
-		err = ft_strjoin("Invalid texture path: ", trimmed);
-		print_error_msg(err);
-		free(err);
 		free(trimmed);
 		return (NULL);
 	}
@@ -65,7 +60,6 @@ int	validate_and_assign_texture(char **dst, char *line)
 	if (*dst)
 	{
 		free(path);
-		print_error_msg("Duplicate texture identifier");
 		return (1);
 	}
 	*dst = path;

@@ -32,7 +32,6 @@ SRC_FILES   = main\
 			rendering/draw\
 			rendering/hooks\
 			rendering/colors\
-			rendering/minimap\
 			free\
 			utils\
 

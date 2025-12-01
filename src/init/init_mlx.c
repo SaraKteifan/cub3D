@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 22:49:57 by skteifan          #+#    #+#             */
-/*   Updated: 2025/12/01 11:13:39 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:39:59 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,6 @@ int	init_frame(t_game *game)
 		return (1);
 	}
 	if (mlx_image_to_window(game->mlx, game->frame, 0, 0) == -1)
-	{
-		print_error_msg((char *)mlx_strerror(mlx_errno));
-		return (1);
-	}
-	return (0);
-}
-
-int	init_minimap(t_game *game)
-{
-	game->minimap = mlx_new_image(game->mlx, 150, 150);
-	if (!game->minimap)
-	{
-		print_error_msg((char *)mlx_strerror(mlx_errno));
-		return (1);
-	}
-	if (mlx_image_to_window(game->mlx, game->minimap, 10, 10) == -1)
 	{
 		print_error_msg((char *)mlx_strerror(mlx_errno));
 		return (1);
@@ -82,11 +66,6 @@ int	init_mlx(t_game *game)
 		return (1);
 	}
 	if (init_frame(game) != 0)
-	{
-		clean_mlx_resources(game);
-		return (1);
-	}
-	if (init_minimap(game) != 0)
 	{
 		clean_mlx_resources(game);
 		return (1);
