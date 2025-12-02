@@ -5,59 +5,68 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 12:00:47 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/10/05 15:51:36 by ral-haba         ###   ########.fr       */
+/*   Created: 2024/09/26 12:58:48 by skteifan          #+#    #+#             */
+/*   Updated: 2025/12/01 14:34:32 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-int	ft_strlen_gnl(char *s)
+void	free_all(char *s1, char *s2)
 {
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	free (s1);
+	free (s2);
 }
 
 char	*ft_strjoin_gnl(char *s1, char *s2)
 {
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
+	size_t	k;
+	char	*joined;
+
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	joined = malloc(i + j + 1);
+	if (!joined)
+	{
+		free_all(s1, s2);
+		return (NULL);
+	}
+	k = -1;
+	while (++k < i)
+		joined[k] = s1[k];
+	k--;
+	while (++k < i + j)
+		joined[k] = s2[k - i];
+	joined[i + j] = '\0';
+	free(s1);
+	return (joined);
+}
+
+char	*initialize_repo(void)
+{
 	char	*str;
 
-	if (!s1)
-	{
-		s1 = malloc(1);
-		if (!s1)
-			return (NULL);
-		s1[0] = '\0';
-	}
-	if (s2 == NULL)
-		return (NULL);
-	str = malloc(sizeof(char) * (ft_strlen_gnl(s1) + ft_strlen_gnl(s2)) + 1);
+	str = malloc(1);
 	if (!str)
 		return (NULL);
-	i = -1;
-	j = 0;
-	while (s1[++i])
-		str[i] = s1[i];
-	while (s2[j])
-		str[i++] = s2[j++];
-	str[i] = '\0';
-	free(s1);
+	str[0] = '\0';
 	return (str);
 }
 
-char	*ft_strchr_gnl(char *s, int c)
+int	check_no_nl(char *str)
 {
-	if (!s)
-		return (NULL);
-	while (*(unsigned char *)s && *(unsigned char *)s != (unsigned char)c)
-		s++;
-	if (*(unsigned char *)s == (unsigned char)c)
-		return ((char *)s);
-	return (NULL);
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\n')
+			return (0);
+		i++;
+	}
+	return (1);
 }

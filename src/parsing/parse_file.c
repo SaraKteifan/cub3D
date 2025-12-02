@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 10:33:15 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/30 15:59:42 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:58:33 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ int	parse_file(char *filename, t_config *cfg)
 		return (1);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		exit_str("Cannot open .cub file.");
+	{
+		print_error_msg("Cannot open .cub file.");
+		return (1);
+	}
 	line = get_next_line(fd);
 	if (parse_headers(fd, cfg, &line))
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 16:31:04 by skteifan          #+#    #+#             */
-/*   Updated: 2025/10/07 12:18:35 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:19:51 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <stddef.h>
-#include "get_next_line.h"
+# include "get_next_line.h"
+
 typedef struct s_list
 {
 	void			*content;

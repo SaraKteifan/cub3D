@@ -3,117 +3,130 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 11:54:41 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/11/29 09:42:54 by skteifan         ###   ########.fr       */
+/*   Created: 2024/09/26 12:50:43 by skteifan          #+#    #+#             */
+/*   Updated: 2025/12/01 14:33:44 by ral-haba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-static char *gnl_remain = NULL;
-
-char	*read_fd(int fd, char *line)
+char	*delete_line(char *repo)
 {
-	char	*buffer;
-	int		bytes;
-
-	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
-	bytes = 1;
-	while (!ft_strchr_gnl(line, '\n') && bytes != 0)
-	{
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes == -1)
-		{
-			free(buffer);
-			free(line);
-			return (NULL);
-		}
-		buffer[bytes] = '\0';
-		line = ft_strjoin_gnl(line, buffer);
-	}
-	free(buffer);
-	return (line);
-}
-
-char	*set_line(char *line)
-{
-	char	*current_line;
-	int		i;
-
-	i = 0;
-	if (!line[0])
-		return (NULL);
-	while (line[i] && line[i] != '\n')
-		i++;
-	if (line[i] == '\n')
-		i++;
-	current_line = malloc(sizeof(char) * i + 1);
-	if (!current_line)
-		return (NULL);
-	i = 0;
-	while (line[i] && line[i] != '\n')
-	{
-		current_line[i] = line[i];
-		i++;
-	}
-	if (line[i] == '\n')
-		current_line[i++] = '\n';
-	current_line[i] = '\0';
-	return (current_line);
-}
-
-char	*save_remain(char *line)
-{
-	char	*remain;
+	char	*new_repo;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	while (line[i] && line[i] != '\n')
+	while (repo[i] != '\0')
 		i++;
-	if (line[i] == '\0' || line[i + 1] == '\0')
+	while (repo[j] != '\n' && repo[j] != '\0')
+		j++;
+	if (repo[j] == '\n')
+		j++;
+	new_repo = malloc(i - j + 1);
+	if (!new_repo)
 	{
-		free(line);
+		free(repo);
 		return (NULL);
 	}
-	remain = malloc(sizeof(char) * (ft_strlen_gnl(line) - i + 1));
-	if (!remain)
+	i = 0;
+	while (repo[j] != '\0')
+		new_repo[i++] = repo[j++];
+	new_repo[i] = '\0';
+	free (repo);
+	return (new_repo);
+}
+
+char	*cut_the_line(char	*repo)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	while (repo[i] != '\n' && repo[i] != '\0')
+		i++;
+	if (repo[i] == '\n')
+		i++;
+	line = malloc(i + 1);
+	if (!line)
 	{
-		free(line);
+		free(repo);
+		repo = NULL;
 		return (NULL);
 	}
-	i++;
-	while (line[i])
-		remain[j++] = line[i++];
-	remain[j] = '\0';
-	free(line);
-	return (remain);
+	i = 0;
+	while (repo[i] != '\n' && repo[i] != '\0')
+	{
+		line[i] = repo[i];
+		i++;
+	}
+	if (repo[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
+	return (line);
+}
+
+char	*reading_file(int fd, char *repo, char *buffer)
+{
+	ssize_t		bytes_read;
+
+	bytes_read = 1;
+	while (repo && check_no_nl(repo) && bytes_read != 0)
+	{
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1 || (ft_strlen(repo) == 0 && bytes_read == 0))
+		{
+			free_all(repo, buffer);
+			repo = NULL;
+			return (NULL);
+		}
+		else if (bytes_read > 0)
+		{
+			buffer[bytes_read] = '\0';
+			repo = ft_strjoin_gnl(repo, buffer);
+		}
+	}
+	return (repo);
+}
+
+static char	*extract_line(char **repo)
+{
+	char	*line;
+
+	line = cut_the_line(*repo);
+	if (!line)
+		return (NULL);
+	*repo = delete_line(*repo);
+	if (*repo && (*repo)[0] == '\0')
+	{
+		free(*repo);
+		*repo = NULL;
+	}
+	return (line);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*final;
+	static char	*repo;
+	char		*buffer;
+	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	final = 0;
-	gnl_remain = read_fd(fd, gnl_remain);
-	if (!gnl_remain)
-		return (NULL);
-	final = set_line(gnl_remain);
-	gnl_remain = save_remain(gnl_remain);
-	return (final);
-}
-void	free_gnl_static(void)
-{
-	if (gnl_remain)
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!repo)
+		repo = initialize_repo();
+	if (!buffer || !repo)
 	{
-		free(gnl_remain);
-		gnl_remain = NULL;
+		free_all(repo, buffer);
+		repo = NULL;
+		return (NULL);
 	}
+	repo = reading_file(fd, repo, buffer);
+	if (!repo)
+		return (NULL);
+	free(buffer);
+	line = extract_line(&repo);
+	return (line);
 }

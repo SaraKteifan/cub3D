@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 13:40:16 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/12/01 10:32:23 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:35:00 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	exit_str(char *msg)
 {
 	ft_putstr_fd(msg, 2);
-	free_gnl_static();
 	exit(1);
 }
 

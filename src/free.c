@@ -6,7 +6,7 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 16:50:32 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/12/01 11:39:42 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:34:25 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,12 @@ void	free_config_and_exit(t_config *cfg, char *line)
 	if (line)
 		free(line);
 	free_config(cfg);
-	free_gnl_static();
 	exit(1);
 }
 
 void	free_all_and_exit(t_game *game)
 {
 	free_config(game->config);
-	free_gnl_static();
 	free(game->player);
 	clean_mlx_resources(game);
 	exit(1);
