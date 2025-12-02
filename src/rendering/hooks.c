@@ -6,7 +6,7 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 09:59:22 by skteifan          #+#    #+#             */
-/*   Updated: 2025/12/01 11:40:09 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:24:36 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	close_hook(void *param)
 	t_game	*game;
 
 	game = param;
-	cleanup_game(game);
+	free_all_and_exit(game);
 }
 
 void	key_hook(void *param)

@@ -34,11 +34,21 @@ int	is_map_line(char *line)
 int	ft_is_number(char *str)
 {
 	int	i;
+	int	end;
 
 	if (!str || !*str)
 		return (0);
 	i = 0;
-	while (str[i])
+	end = ft_strlen(str) - 1;
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	if (str[i] == '+')
+		i++;
+	while (str[end] == ' ' || str[end] == '\t')
+		end--;
+	if (i > end)
+		return (0);
+	while (i <= end)
 	{
 		if (str[i] < '0' || str[i] > '9')
 			return (0);

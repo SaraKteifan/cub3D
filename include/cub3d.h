@@ -114,7 +114,6 @@ typedef struct s_ray
 
 void		free_split(char **arr);
 void		print_error_msg(char *msg);
-void		exit_str(char *msg);
 void		init_game(t_game *game);
 int			init_config(t_config **cfg);
 void		init_player(t_player *p);
@@ -129,7 +128,6 @@ void		replace_tabs_with_spaces(char *line);
 int			ft_is_number(char *str);
 int			is_valid_rgb_value(char *part);
 int			validate_color_parts(char **parts, int color[3]);
-int			is_duplicate_texture(char *id, t_config *cfg);
 int			is_duplicate_color(char id, t_config *cfg);
 int			validate_and_assign_texture(char **dst, char *line);
 int			handle_header_value(char *trimmed, t_config *cfg);
@@ -138,7 +136,6 @@ void		free_config(t_config *cfg);
 int			valid_color_commas(char *s);
 char		*parse_texture(char *line);
 int			parse_color(char *line, int color[3], t_config *cfg);
-int			only_map_chars(char **map);
 
 int			setup_game(t_game *game);
 int			setup_player_from_map(t_config *config, t_player *player);
@@ -151,7 +148,6 @@ void		key_hook(void *param);
 uint32_t	rgb_to_uint32(int rgb[3]);
 uint32_t	get_tex_pixel_color(mlx_texture_t *tex, int tex_x, int tex_y);
 void		close_hook(void *param);
-void		cleanup_game(t_game *game);
 void		clean_mlx_resources(t_game *game);
 void		free_all_and_exit(t_game *game);
 void		print_config_errors(t_config *cfg);

@@ -1,0 +1,4 @@
+build
+*.o
+cub3D
+.vscode

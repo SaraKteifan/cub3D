@@ -6,17 +6,11 @@
 /*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 13:40:16 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/12/01 12:35:00 by skteifan         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:28:36 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	exit_str(char *msg)
-{
-	ft_putstr_fd(msg, 2);
-	exit(1);
-}
 
 int	is_line_empty(const char *line)
 {

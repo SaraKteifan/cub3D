@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_colors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ral-haba <ral-haba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skteifan <skteifan@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:09:16 by ral-haba          #+#    #+#             */
-/*   Updated: 2025/12/01 14:09:58 by ral-haba         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:00:48 by skteifan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	check_comma_char(char c, int *last_was_comma, int *commas)
 		*last_was_comma = 0;
 		return (1);
 	}
-	if (c == ' ' || c == '\t')
+	if (c == ' ' || c == '\t' || c == '+')
 		return (1);
 	return (0);
 }

@@ -12,11 +12,6 @@
 
 #include "cub3d.h"
 
-void	cleanup_game(t_game *game)
-{
-	free_all_and_exit(game);
-}
-
 int	main(int ac, char **av)
 {
 	t_game	game;
