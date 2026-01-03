@@ -123,6 +123,7 @@ int			is_line_empty(const char *line);
 int			is_map_line(char *line);
 int			parse_map(int fd, t_config *cfg, char *line);
 int			validate_map(t_config *cfg);
+int			validate_map_closure(char **map, int px, int py);
 char		*trim_spaces(char *str);
 void		replace_tabs_with_spaces(char *line);
 int			ft_is_number(char *str);

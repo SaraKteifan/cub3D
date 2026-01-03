@@ -22,6 +22,7 @@ SRC_FILES   = main\
 			parsing/parse_colors\
 			parsing/parse_map\
 			parsing/validate_map\
+			parsing/validate_map_closure\
 			parsing/parse_utils\
 			init/init\
 			init/init_game\
@@ -53,6 +54,8 @@ $(LIBFT):
 $(MLX42):
 	@cmake -B $(MLX_PATH)/build -S $(MLX_PATH) > /dev/null
 	@make -C $(MLX_PATH)/build -j4 --no-print-directory -s
+
+bonus: all
 
 build:
 	@mkdir -p $(OBJ_PATH)

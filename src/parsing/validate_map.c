@@ -83,29 +83,6 @@ static int	find_player_pos(char **map, int *px, int *py)
 	return (0);
 }
 
-static int	flood_fill(char **map, int x, int y)
-{
-	static int	dx[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
-	static int	dy[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
-	int			i;
-
-	if (y < 0 || x < 0 || !map[y] || x >= (int)ft_strlen(map[y]))
-		return (1);
-	if (map[y][x] == ' ' || map[y][x] == '\0')
-		return (1);
-	if (map[y][x] == '1' || map[y][x] == 'V')
-		return (0);
-	map[y][x] = 'V';
-	i = 0;
-	while (i < 8)
-	{
-		if (flood_fill(map, x + dx[i], y + dy[i]))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 int	validate_map(t_config *cfg)
 {
 	char	**copy;
@@ -128,7 +105,7 @@ int	validate_map(t_config *cfg)
 		free_split(copy);
 		return (1);
 	}
-	result = flood_fill(copy, px, py);
+	result = validate_map_closure(copy, px, py);
 	free_split(copy);
 	return (result);
 }
